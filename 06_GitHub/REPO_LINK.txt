@@ -9,9 +9,7 @@ Role           : Full Stack Developer Intern — IPAGE Group
 ------------------------------------------------------------------------
 GITHUB REPOSITORY URL:
 ------------------------------------------------------------------------
-https://github.com/<YOUR_GITHUB_USERNAME>/FullStack_Chatbot_Task_Priyanshu_Pundir
-
-(Replace <YOUR_GITHUB_USERNAME> with your actual GitHub username once pushed)
+https://github.com/PriyanshuPundir01/FullStack_Chatbot_Task_Priyanshu_Pundir
 
 ------------------------------------------------------------------------
 REPOSITORY DETAILS:
