@@ -1,0 +1,37 @@
+{
+  "name": "dronetv-backend-api",
+  "version": "1.0.0",
+  "description": "REST API for DroneTV AI Support & Lead Assistant",
+  "main": "src/server.ts",
+  "scripts": {
+    "dev": "tsx watch src/server.ts",
+    "build": "tsc",
+    "start": "node dist/server.js",
+    "seed": "tsx src/scripts/seed.ts"
+  },
+  "keywords": [
+    "express",
+    "typescript",
+    "rest-api",
+    "dronetv",
+    "chatbot",
+    "enquiries"
+  ],
+  "author": "Priyanshu Pundir",
+  "license": "ISC",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "express-rate-limit": "^7.5.0",
+    "helmet": "^8.0.0",
+    "mongoose": "^8.9.5"
+  },
+  "devDependencies": {
+    "@types/cors": "^2.8.17",
+    "@types/express": "^4.17.21",
+    "@types/node": "^22.10.7",
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.3"
+  }
+}

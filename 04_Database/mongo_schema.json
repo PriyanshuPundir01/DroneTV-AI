@@ -1,0 +1,60 @@
+{
+  "$jsonSchema": {
+    "bsonType": "object",
+    "required": ["name", "email", "phone", "userType", "interest", "message"],
+    "properties": {
+      "_id": {
+        "bsonType": "objectId",
+        "description": "Unique MongoDB BSON identifier"
+      },
+      "name": {
+        "bsonType": "string",
+        "minLength": 2,
+        "maxLength": 100,
+        "description": "Full name of the candidate or client, required"
+      },
+      "email": {
+        "bsonType": "string",
+        "pattern": "^\\S+@\\S+\\.\\S+$",
+        "description": "RFC-compliant email address, required"
+      },
+      "phone": {
+        "bsonType": "string",
+        "pattern": "^[0-9+\\-\\s()]{7,20}$",
+        "description": "Contact telephone number with country code, required"
+      },
+      "userType": {
+        "enum": ["Student", "Customer", "Other"],
+        "description": "User segmentation category, required"
+      },
+      "interest": {
+        "bsonType": "string",
+        "minLength": 2,
+        "maxLength": 150,
+        "description": "Service or course selected by the user, required"
+      },
+      "message": {
+        "bsonType": "string",
+        "minLength": 5,
+        "maxLength": 2000,
+        "description": "User message / query details, required"
+      },
+      "status": {
+        "enum": ["New", "Contacted", "In Progress", "Closed"],
+        "description": "Lead lifecycle status, defaults to New"
+      },
+      "adminNotes": {
+        "bsonType": "string",
+        "description": "Internal CRM notes added by flight administrators"
+      },
+      "createdAt": {
+        "bsonType": "date",
+        "description": "Timestamp of creation"
+      },
+      "updatedAt": {
+        "bsonType": "date",
+        "description": "Timestamp of latest modification"
+      }
+    }
+  }
+}

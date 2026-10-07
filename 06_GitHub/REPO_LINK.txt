@@ -1,0 +1,21 @@
+========================================================================
+DRONETV AI ASSISTANT — GITHUB REPOSITORY LINK
+========================================================================
+
+Candidate Name : Priyanshu Pundir
+Project Name   : FullStack_Chatbot_Task_Priyanshu_Pundir
+Role           : Full Stack Developer Intern — IPAGE Group
+
+------------------------------------------------------------------------
+GITHUB REPOSITORY URL:
+------------------------------------------------------------------------
+https://github.com/<YOUR_GITHUB_USERNAME>/FullStack_Chatbot_Task_Priyanshu_Pundir
+
+(Replace <YOUR_GITHUB_USERNAME> with your actual GitHub username once pushed)
+
+------------------------------------------------------------------------
+REPOSITORY DETAILS:
+- Technologies : React 18, TypeScript, Vite, Node.js, Express, MongoDB
+- Commit SHA   : Main branch initial commit
+- Access       : Public
+========================================================================
