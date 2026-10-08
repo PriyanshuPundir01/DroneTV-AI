@@ -63,66 +63,75 @@ The application is wrapped in a bespoke <b>Cyber-Aerospace Glassmorphic Design S
 
 <div align="center">
 
-### ◈ 1. Home — Autonomous Drone Command Gateway
+### ◈ 1. Mission Boot — DroneTV Cinematic Radar & Audio Initialization
+<kbd>
+  <img src="02_Screenshots/00_Intro_Animation.png" alt="DroneTV Cinematic Intro Boot" width="90%" style="border-radius: 8px; border: 2px solid #00f0ff; box-shadow: 0 0 30px rgba(0, 240, 255, 0.3);" />
+</kbd>
+<br/>
+<sub style="font-family: 'Bookman Old Style', 'URW Bookman', serif;"><b>◈ Figure 1.0:</b> Cinematic flight OS bootloader featuring live telemetry calibration, motor spool diagnostics (5,720+ RPM), satellite locks, and Web Audio turbine synthesis.</sub>
+
+<br/><br/>
+
+### ◈ 2. Home — Autonomous Drone Command Gateway
 <kbd>
   <img src="02_Screenshots/01_Home_Page.png" alt="DroneTV Home Page" width="90%" style="border-radius: 8px; border: 2px solid #00ff99; box-shadow: 0 0 30px rgba(0, 255, 153, 0.25);" />
 </kbd>
 <br/>
-<sub style="font-family: 'Bookman Old Style', 'URW Bookman', serif;"><b>◈ Figure 1.0:</b> Autonomous command landing gateway featuring live telemetry radar, animated quadcopter indicators, metrics HUD, and audio experience controls.</sub>
+<sub style="font-family: 'Bookman Old Style', 'URW Bookman', serif;"><b>◈ Figure 1.1:</b> Autonomous command landing gateway featuring live telemetry radar, animated quadcopter indicators, metrics HUD, and active Vector Drone Cursor.</sub>
 
 <br/><br/>
 
-### ◈ 2. Services & Training — 3D Physical Weight-Tilt Interaction
+### ◈ 3. Services & Training — 3D Physical Weight-Tilt Interaction
 <kbd>
   <img src="02_Screenshots/02_Services_and_Metrics.png" alt="Services and Metrics" width="90%" style="border-radius: 8px; border: 2px solid #00d4ff; box-shadow: 0 0 30px rgba(0, 212, 255, 0.25);" />
 </kbd>
 <br/>
-<sub style="font-family: 'Bookman Old Style', 'URW Bookman', serif;"><b>◈ Figure 1.1:</b> Commercial service modules with interactive 3D perspective weight-tilt physics — the hovered corner sinks backward under cursor mass while the opposite edge lifts forward.</sub>
+<sub style="font-family: 'Bookman Old Style', 'URW Bookman', serif;"><b>◈ Figure 1.2:</b> Commercial service modules with interactive 3D perspective weight-tilt physics — the hovered corner sinks backward under cursor mass while the opposite edge lifts forward.</sub>
 
 <br/><br/>
 
-### ◈ 3. DroneTV AI Chatbot — Predefined Queries & Instant Intelligence
+### ◈ 4. DroneTV AI Chatbot — Predefined Queries & Instant Intelligence
 <kbd>
   <img src="02_Screenshots/03_Chatbot_Services_Query.png" alt="Chatbot Services Query" width="90%" style="border-radius: 8px; border: 2px solid #00ff99; box-shadow: 0 0 30px rgba(0, 255, 153, 0.25);" />
 </kbd>
 <br/>
-<sub style="font-family: 'Bookman Old Style', 'URW Bookman', serif;"><b>◈ Figure 1.2:</b> Rule-based conversational assistant answering commercial aerial service inquiries with structured bullet responses, session persistence, and instant query chips.</sub>
+<sub style="font-family: 'Bookman Old Style', 'URW Bookman', serif;"><b>◈ Figure 1.3:</b> Rule-based conversational assistant answering commercial aerial service inquiries with structured bullet responses, session persistence, and instant query chips.</sub>
 
 <br/><br/>
 
-### ◈ 4. Drone Academy & Courses — Interactive Lead Generation Flow
+### ◈ 5. Drone Academy & Courses — Interactive Lead Generation Flow
 <kbd>
   <img src="02_Screenshots/04_Chatbot_Courses_Query.png" alt="Chatbot Courses Query" width="90%" style="border-radius: 8px; border: 2px solid #ff007f; box-shadow: 0 0 30px rgba(255, 0, 127, 0.25);" />
 </kbd>
 <br/>
-<sub style="font-family: 'Bookman Old Style', 'URW Bookman', serif;"><b>◈ Figure 1.3:</b> DGCA Remote Pilot Certification queries with inline conversational lead intake form for direct student and customer registration.</sub>
+<sub style="font-family: 'Bookman Old Style', 'URW Bookman', serif;"><b>◈ Figure 1.4:</b> DGCA Remote Pilot Certification queries with inline conversational lead intake form for direct student and customer registration.</sub>
 
 <br/><br/>
 
-### ◈ 5. Mission Control CRM — Administrative Intelligence Dashboard
+### ◈ 6. Mission Control CRM — Administrative Intelligence Dashboard
 <kbd>
   <img src="02_Screenshots/05_Admin_Dashboard.png" alt="Admin Dashboard" width="90%" style="border-radius: 8px; border: 2px solid #ffb703; box-shadow: 0 0 30px rgba(255, 183, 3, 0.25);" />
 </kbd>
 <br/>
-<sub style="font-family: 'Bookman Old Style', 'URW Bookman', serif;"><b>◈ Figure 1.4:</b> Secured CRM command portal displaying total volume, pipeline lifecycle distribution (New, Contacted, In Progress, Closed), and rapid response actions.</sub>
+<sub style="font-family: 'Bookman Old Style', 'URW Bookman', serif;"><b>◈ Figure 1.5:</b> Secured CRM command portal displaying total volume, pipeline lifecycle distribution (New, Contacted, In Progress, Closed), and rapid response actions.</sub>
 
 <br/><br/>
 
-### ◈ 6. Admin Intelligence — Real-Time Search & Segment Filtering
+### ◈ 7. Admin Intelligence — Real-Time Search & Segment Filtering
 <kbd>
   <img src="02_Screenshots/06_Admin_Live_Search_Filter.png" alt="Admin Live Search Filter" width="90%" style="border-radius: 8px; border: 2px solid #00d4ff; box-shadow: 0 0 30px rgba(0, 212, 255, 0.25);" />
 </kbd>
 <br/>
-<sub style="font-family: 'Bookman Old Style', 'URW Bookman', serif;"><b>◈ Figure 1.5:</b> Sub-millisecond client-side enquiry searching across names, emails, services, and multi-state tabs (`All`, `Student`, `Customer`).</sub>
+<sub style="font-family: 'Bookman Old Style', 'URW Bookman', serif;"><b>◈ Figure 1.6:</b> Sub-millisecond client-side enquiry searching across names, emails, services, and multi-state tabs (`All`, `Student`, `Customer`).</sub>
 
 <br/><br/>
 
-### ◈ 7. Enquiry Inspector — Deep Payload Modal & Status Mutation
+### ◈ 8. Enquiry Inspector — Deep Payload Modal & Status Mutation
 <kbd>
   <img src="02_Screenshots/07_Enquiry_Detail_Modal.png" alt="Enquiry Detail Modal" width="90%" style="border-radius: 8px; border: 2px solid #00ff99; box-shadow: 0 0 30px rgba(0, 255, 153, 0.25);" />
 </kbd>
 <br/>
-<sub style="font-family: 'Bookman Old Style', 'URW Bookman', serif;"><b>◈ Figure 1.6:</b> Modal inspector revealing full sanitized message payloads, contact coordinates, audit timestamps, and one-click status transitions.</sub>
+<sub style="font-family: 'Bookman Old Style', 'URW Bookman', serif;"><b>◈ Figure 1.7:</b> Modal inspector revealing full sanitized message payloads, contact coordinates, audit timestamps, and one-click status transitions.</sub>
 
 </div>
 
