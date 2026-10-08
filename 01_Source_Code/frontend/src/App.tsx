@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { Navbar } from './components/Navbar';
 import { Hero } from './components/Hero';
+import { DroneTVIntroAnimation } from './components/DroneTVIntroAnimation';
+import { CustomCursor } from './components/CustomCursor';
 import { ServicesSection } from './components/ServicesSection';
 import { CoursesSection } from './components/CoursesSection';
 import { EnquiryForm } from './components/EnquiryForm';
@@ -15,6 +17,7 @@ export function App() {
   const [isChatbotOpen, setIsChatbotOpen] = useState<boolean>(false);
   const [prefilledInterest, setPrefilledInterest] = useState<string>('');
   const [toasts, setToasts] = useState<ToastMessage[]>([]);
+  const [showIntro, setShowIntro] = useState<boolean>(true);
 
   const defaultAdminUser: AdminUser = {
     name: 'Priyanshu Pundir',
@@ -68,6 +71,14 @@ export function App() {
 
   return (
     <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
+      {/* DroneTV Cinematic Boot & Startup Introduction Animation */}
+      {showIntro && (
+        <DroneTVIntroAnimation onComplete={() => setShowIntro(false)} />
+      )}
+
+      {/* Aerospace Drone Telemetry Reticle Cursor */}
+      <CustomCursor />
+
       {/* Toast Notification Container */}
       <ToastContainer toasts={toasts} onDismiss={dismissToast} />
 
@@ -76,6 +87,7 @@ export function App() {
         activeTab={activeTab}
         setActiveTab={setActiveTab}
         openChatbot={() => setIsChatbotOpen(true)}
+        onReplayIntro={() => setShowIntro(true)}
       />
 
       {/* Main View Area */}
@@ -92,6 +104,7 @@ export function App() {
                 setActiveTab('services');
                 window.scrollTo({ top: 0, behavior: 'smooth' });
               }}
+              onReplayIntro={() => setShowIntro(true)}
             />
             <ServicesSection onSelectService={handleSelectService} />
             <CoursesSection onSelectCourse={handleSelectCourse} />

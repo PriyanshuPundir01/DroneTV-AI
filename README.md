@@ -110,10 +110,9 @@ FullStack_Chatbot_Task_Priyanshu_Pundir/
 │   │   ├── index.html            # Google Fonts & aerospace metadata
 │   │   ├── package.json
 │   │   └── vite.config.js        # Reverse proxy config
-│   ├── package.json              # Monorepo runner (concurrent execution)
-│   └── README.md
+│   └── package.json              # Monorepo runner (concurrent execution)
 ├── 📁 02_Screenshots/            # High-resolution screenshots of all views
-├── 📁 03_API_Documentation/      # Complete API Markdown reference + Postman Collection JSON
+├── 📁 03_API_Documentation/      # API_DOCUMENTATION.md + Postman Collection JSON
 ├── 📁 04_Database/               # SQL schema, MongoDB schema, seed data & setup instructions
 ├── 📁 05_Video_Walkthrough/      # 5-10 minute presentation guide, script & link template
 ├── 📁 06_GitHub/                 # Git push instructions, repository link template

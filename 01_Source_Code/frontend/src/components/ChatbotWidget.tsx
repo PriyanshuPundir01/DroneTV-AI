@@ -17,6 +17,7 @@ import {
 import { ChatMessage, QuickQuestionItem } from '../types/chat';
 import { CreateEnquiryInput } from '../types/enquiry';
 import { api } from '../services/api';
+import { soundFx } from '../utils/soundEffects';
 
 interface ChatbotWidgetProps {
   isOpen: boolean;
@@ -52,6 +53,22 @@ const INITIAL_BOT_MESSAGE: ChatMessage = {
   ]
 };
 
+const getFreshWelcomeMessage = (): ChatMessage => ({
+  id: `msg-welcome-${Date.now()}`,
+  sender: 'bot',
+  text:
+    `👋 **Greetings from DroneTV!**\n\n` +
+    `I am your **AI Support & Lead Assistant**. I can answer questions about our **DGCA-certified drone pilot training**, **aerial cinematography**, **LiDAR surveying**, and registration processes.\n\n` +
+    `Choose one of the quick questions below or type your query:`,
+  timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+  suggestions: [
+    'What services does DroneTV provide?',
+    'What courses / training are available?',
+    'How can I register?',
+    'I am a student.'
+  ]
+});
+
 const STORAGE_KEY = 'dronetv_chat_session_history';
 
 export const ChatbotWidget: React.FC<ChatbotWidgetProps> = ({
@@ -75,6 +92,8 @@ export const ChatbotWidget: React.FC<ChatbotWidgetProps> = ({
   const [isLoading, setIsLoading] = useState(false);
   const [showInChatForm, setShowInChatForm] = useState(false);
   const [inChatInterest, setInChatInterest] = useState('DGCA Certified Remote Pilot Training');
+  const [isResetting, setIsResetting] = useState(false);
+  const [resetBanner, setResetBanner] = useState(false);
 
   // In-chat lead capture fields
   const [leadForm, setLeadForm] = useState<CreateEnquiryInput>({
@@ -154,16 +173,31 @@ export const ChatbotWidget: React.FC<ChatbotWidgetProps> = ({
     }
   };
 
-  const handleResetConversation = () => {
-    if (window.confirm('Reset this conversation session? Conversation history will be refreshed.')) {
-      setMessages([INITIAL_BOT_MESSAGE]);
-      setShowInChatForm(false);
-      try {
-        sessionStorage.removeItem(STORAGE_KEY);
-      } catch {
-        // Ignored
-      }
+  const handleResetConversation = (e?: React.MouseEvent) => {
+    if (e) {
+      e.preventDefault();
+      e.stopPropagation();
     }
+
+    soundFx.playClick(650);
+    setIsResetting(true);
+
+    const freshMsg = getFreshWelcomeMessage();
+    setMessages([freshMsg]);
+    setInputText('');
+    setShowInChatForm(false);
+    setLeadErrors({});
+
+    try {
+      sessionStorage.removeItem(STORAGE_KEY);
+      sessionStorage.setItem(STORAGE_KEY, JSON.stringify([freshMsg]));
+    } catch {
+      // Storage unavailable
+    }
+
+    setResetBanner(true);
+    setTimeout(() => setIsResetting(false), 500);
+    setTimeout(() => setResetBanner(false), 2800);
   };
 
   const handleActionClick = (action: { label: string; actionType: string; payload?: string }) => {
@@ -311,25 +345,63 @@ export const ChatbotWidget: React.FC<ChatbotWidgetProps> = ({
               </div>
             </div>
 
-            <div style={{ display: 'flex', alignItems: 'center', gap: '0.35rem' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
               <button
+                type="button"
                 onClick={handleResetConversation}
                 className="btn btn-secondary btn-icon btn-sm"
-                title="Reset / Clear conversation"
-                style={{ width: '2rem', height: '2rem' }}
+                title="Refresh / Reset chat history"
+                aria-label="Refresh conversation history"
+                style={{
+                  width: '2.1rem',
+                  height: '2.1rem',
+                  cursor: 'pointer',
+                  position: 'relative'
+                }}
               >
-                <RotateCcw size={14} />
+                <RotateCcw
+                  size={15}
+                  style={{
+                    transition: 'transform 0.5s ease',
+                    transform: isResetting ? 'rotate(-360deg)' : 'none'
+                  }}
+                />
               </button>
               <button
+                type="button"
                 onClick={onClose}
                 className="btn btn-secondary btn-icon btn-sm"
                 title="Close chat window"
-                style={{ width: '2rem', height: '2rem' }}
+                aria-label="Close chat window"
+                style={{ width: '2.1rem', height: '2.1rem', cursor: 'pointer' }}
               >
                 <X size={16} />
               </button>
             </div>
           </div>
+
+          {/* Reset Banner Notification */}
+          {resetBanner && (
+            <div
+              style={{
+                padding: '0.45rem 1rem',
+                backgroundColor: 'rgba(16, 185, 129, 0.15)',
+                borderBottom: '1px solid rgba(16, 185, 129, 0.3)',
+                color: 'var(--accent-emerald)',
+                fontSize: '0.75rem',
+                fontWeight: 600,
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                gap: '0.4rem',
+                fontFamily: 'var(--font-mono)',
+                animation: 'modal-appear 0.2s ease'
+              }}
+            >
+              <CheckCircle2 size={13} />
+              <span>Conversation history refreshed successfully</span>
+            </div>
+          )}
 
           {/* Chat Messages Body */}
           <div
@@ -631,6 +703,30 @@ export const ChatbotWidget: React.FC<ChatbotWidgetProps> = ({
               gap: '0.4rem'
             }}
           >
+            {messages.length > 1 && (
+              <button
+                type="button"
+                onClick={handleResetConversation}
+                title="Clear conversation history and start fresh"
+                style={{
+                  padding: '0.35rem 0.75rem',
+                  borderRadius: '9999px',
+                  background: 'rgba(244, 63, 94, 0.12)',
+                  border: '1px solid rgba(244, 63, 94, 0.35)',
+                  color: '#fda4af',
+                  fontSize: '0.75rem',
+                  fontWeight: 600,
+                  cursor: 'pointer',
+                  flexShrink: 0,
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: '0.35rem'
+                }}
+              >
+                <RotateCcw size={12} />
+                <span>Clear History</span>
+              </button>
+            )}
             {PREDEFINED_QUESTIONS.map((q) => (
               <button
                 key={q.id}

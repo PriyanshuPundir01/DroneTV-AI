@@ -8,7 +8,8 @@ import {
   ShieldCheck,
   Menu,
   X,
-  Activity
+  Activity,
+  Sparkles
 } from 'lucide-react';
 import { api } from '../services/api';
 
@@ -19,6 +20,7 @@ interface NavbarProps {
   unreadCount?: number;
   isAdminAuthenticated?: boolean;
   onOpenAdminLogin?: () => void;
+  onReplayIntro?: () => void;
 }
 
 interface NavItem {
@@ -31,7 +33,8 @@ interface NavItem {
 export const Navbar: React.FC<NavbarProps> = ({
   activeTab,
   setActiveTab,
-  openChatbot
+  openChatbot,
+  onReplayIntro
 }) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [backendOnline, setBackendOnline] = useState<boolean | null>(null);
@@ -255,6 +258,25 @@ export const Navbar: React.FC<NavbarProps> = ({
             </span>
             <Activity size={12} color="var(--text-muted)" />
           </div>
+
+          {/* Replay Intro Animation Button */}
+          {onReplayIntro && (
+            <button
+              onClick={onReplayIntro}
+              className="btn btn-secondary btn-sm"
+              style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '0.35rem',
+                fontSize: '0.78rem',
+                padding: '0.4rem 0.75rem'
+              }}
+              title="Replay DroneTV Introduction Animation"
+            >
+              <Sparkles size={14} color="var(--accent-cyan)" />
+              <span style={{ display: 'none' }} className="status-text">Intro</span>
+            </button>
+          )}
 
           {/* Quick Chatbot Trigger */}
           <button

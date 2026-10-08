@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { WeightTiltCard } from './WeightTiltCard';
 import {
   Video,
   MapPin,
@@ -200,16 +201,16 @@ export const ServicesSection: React.FC<ServicesSectionProps> = ({ onSelectServic
           {filteredServices.map((service) => {
             const Icon = service.icon;
             return (
-              <div
+              <WeightTiltCard
                 key={service.id}
                 className="glass-card"
+                maxTilt={14}
                 style={{
                   padding: '2rem',
                   display: 'flex',
                   flexDirection: 'column',
                   justifyContent: 'space-between',
-                  borderRadius: '16px',
-                  position: 'relative'
+                  borderRadius: '16px'
                 }}
               >
                 <div>
@@ -335,14 +336,15 @@ export const ServicesSection: React.FC<ServicesSectionProps> = ({ onSelectServic
                     <ArrowRight size={14} />
                   </button>
                 </div>
-              </div>
+              </WeightTiltCard>
             );
           })}
         </div>
 
-        {/* Custom Quote Banner */}
-        <div
+        {/* Custom Quote Banner with 3D Weight Tilt */}
+        <WeightTiltCard
           className="glass-card"
+          maxTilt={8}
           style={{
             marginTop: '3.5rem',
             padding: '2rem 2.5rem',
@@ -372,7 +374,7 @@ export const ServicesSection: React.FC<ServicesSectionProps> = ({ onSelectServic
             <span>Request Commercial Quotation</span>
             <ArrowRight size={16} />
           </button>
-        </div>
+        </WeightTiltCard>
       </div>
     </section>
   );

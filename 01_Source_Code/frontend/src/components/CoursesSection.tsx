@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { WeightTiltCard } from './WeightTiltCard';
 import {
   GraduationCap,
   Clock,
@@ -143,16 +144,16 @@ export const CoursesSection: React.FC<CoursesSectionProps> = ({ onSelectCourse }
           }}
         >
           {courses.map((course) => (
-            <div
+            <WeightTiltCard
               key={course.id}
               className="glass-card"
+              maxTilt={14}
               style={{
                 padding: '2rem',
                 display: 'flex',
                 flexDirection: 'column',
                 justifyContent: 'space-between',
-                borderRadius: '16px',
-                position: 'relative'
+                borderRadius: '16px'
               }}
             >
               <div>
@@ -346,13 +347,14 @@ export const CoursesSection: React.FC<CoursesSectionProps> = ({ onSelectCourse }
                   <span>Enrol / Inquire</span>
                 </button>
               </div>
-            </div>
+            </WeightTiltCard>
           ))}
         </div>
 
-        {/* Student Special Notice */}
-        <div
+        {/* Student Special Notice Banner with 3D Weight Tilt */}
+        <WeightTiltCard
           className="glass-card"
+          maxTilt={8}
           style={{
             marginTop: '3rem',
             padding: '1.5rem 2rem',
@@ -396,7 +398,7 @@ export const CoursesSection: React.FC<CoursesSectionProps> = ({ onSelectCourse }
             <span>Student Concession</span>
             <ArrowRight size={14} />
           </button>
-        </div>
+        </WeightTiltCard>
       </div>
     </section>
   );

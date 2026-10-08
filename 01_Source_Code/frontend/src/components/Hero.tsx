@@ -1,4 +1,5 @@
 import React from 'react';
+import { WeightTiltCard } from './WeightTiltCard';
 import {
   Compass,
   ArrowRight,
@@ -9,17 +10,20 @@ import {
   CheckCircle2,
   Sparkles
 } from 'lucide-react';
+import { soundFx } from '../utils/soundEffects';
 
 interface HeroProps {
   onOpenChat: () => void;
   onExploreCourses: () => void;
   onExploreServices: () => void;
+  onReplayIntro?: () => void;
 }
 
 export const Hero: React.FC<HeroProps> = ({
   onOpenChat,
   onExploreCourses,
-  onExploreServices
+  onExploreServices,
+  onReplayIntro
 }) => {
   return (
     <section
@@ -42,7 +46,7 @@ export const Hero: React.FC<HeroProps> = ({
           {/* Left Content */}
           <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
             {/* Tag badge */}
-            <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', flexWrap: 'wrap' }}>
               <span
                 style={{
                   display: 'inline-flex',
@@ -61,6 +65,30 @@ export const Hero: React.FC<HeroProps> = ({
                 <Sparkles size={14} />
                 NEXT-GEN DRONE TECH & FLIGHT ACADEMY
               </span>
+
+              {onReplayIntro && (
+                <button
+                  onClick={onReplayIntro}
+                  style={{
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    gap: '0.35rem',
+                    padding: '0.35rem 0.8rem',
+                    borderRadius: '9999px',
+                    background: 'rgba(15, 23, 42, 0.8)',
+                    border: '1px solid var(--border-subtle)',
+                    color: 'var(--text-secondary)',
+                    fontSize: '0.75rem',
+                    fontWeight: 600,
+                    cursor: 'pointer',
+                    transition: 'all 0.2s ease'
+                  }}
+                  title="Replay DroneTV Start Animation"
+                >
+                  <Sparkles size={11} color="var(--accent-cyan)" />
+                  <span>Replay Start Animation</span>
+                </button>
+              )}
             </div>
 
             {/* Headline */}
@@ -142,9 +170,10 @@ export const Hero: React.FC<HeroProps> = ({
             </div>
           </div>
 
-          {/* Right Visual Dashboard Widget */}
-          <div
+          {/* Right Visual Dashboard Widget with 3D Weight Tilt */}
+          <WeightTiltCard
             className="glass-card"
+            maxTilt={10}
             style={{
               padding: '2rem',
               position: 'relative',
@@ -230,24 +259,29 @@ export const Hero: React.FC<HeroProps> = ({
                 }}
               />
 
-              {/* Center Drone Icon */}
+              {/* Center Drone Icon with Interactive Hover & Ping */}
               <div
+                onClick={() => soundFx.playRadarPing()}
+                title="Telemetry Drone Target • Click to Ping Radar"
                 style={{
                   position: 'relative',
                   zIndex: 2,
-                  width: '4rem',
-                  height: '4rem',
+                  width: '4.25rem',
+                  height: '4.25rem',
                   borderRadius: '50%',
-                  background: 'rgba(0, 242, 254, 0.15)',
-                  border: '1px solid var(--accent-cyan)',
+                  background: 'rgba(0, 242, 254, 0.18)',
+                  border: '1.5px solid var(--accent-cyan)',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
-                  boxShadow: '0 0 20px rgba(0, 242, 254, 0.4)',
-                  animation: 'float-drone 3s ease-in-out infinite'
+                  boxShadow: '0 0 25px rgba(0, 242, 254, 0.45)',
+                  animation: 'float-drone 3s ease-in-out infinite',
+                  cursor: 'pointer',
+                  transition: 'transform 0.2s ease, box-shadow 0.2s ease'
                 }}
+                className="interactive-target"
               >
-                <span style={{ fontSize: '1.8rem' }}>🛸</span>
+                <span style={{ fontSize: '1.9rem', userSelect: 'none' }}>🛸</span>
               </div>
 
               {/* Waypoint Blips */}
@@ -331,10 +365,10 @@ export const Hero: React.FC<HeroProps> = ({
                 </div>
               </div>
             </div>
-          </div>
+          </WeightTiltCard>
         </div>
 
-        {/* Global Key Metrics Bar */}
+        {/* Global Key Metrics Bar with 3D Weight Tilt */}
         <div
           style={{
             marginTop: '4rem',
@@ -343,7 +377,7 @@ export const Hero: React.FC<HeroProps> = ({
             gap: '1.25rem'
           }}
         >
-          <div className="glass-card" style={{ padding: '1.5rem', display: 'flex', alignItems: 'center', gap: '1rem' }}>
+          <WeightTiltCard className="glass-card" maxTilt={12} style={{ padding: '1.5rem', display: 'flex', alignItems: 'center', gap: '1rem' }}>
             <div
               style={{
                 width: '3rem',
@@ -361,9 +395,9 @@ export const Hero: React.FC<HeroProps> = ({
               <div style={{ fontSize: '1.75rem', fontWeight: 800, color: '#fff' }}>5,200+</div>
               <div style={{ fontSize: '0.85rem', color: 'var(--text-secondary)' }}>Certified Drone Pilots</div>
             </div>
-          </div>
+          </WeightTiltCard>
 
-          <div className="glass-card" style={{ padding: '1.5rem', display: 'flex', alignItems: 'center', gap: '1rem' }}>
+          <WeightTiltCard className="glass-card" maxTilt={12} style={{ padding: '1.5rem', display: 'flex', alignItems: 'center', gap: '1rem' }}>
             <div
               style={{
                 width: '3rem',
@@ -381,9 +415,9 @@ export const Hero: React.FC<HeroProps> = ({
               <div style={{ fontSize: '1.75rem', fontWeight: 800, color: '#fff' }}>140+</div>
               <div style={{ fontSize: '0.85rem', color: 'var(--text-secondary)' }}>Enterprise Deployments</div>
             </div>
-          </div>
+          </WeightTiltCard>
 
-          <div className="glass-card" style={{ padding: '1.5rem', display: 'flex', alignItems: 'center', gap: '1rem' }}>
+          <WeightTiltCard className="glass-card" maxTilt={12} style={{ padding: '1.5rem', display: 'flex', alignItems: 'center', gap: '1rem' }}>
             <div
               style={{
                 width: '3rem',
@@ -401,9 +435,9 @@ export const Hero: React.FC<HeroProps> = ({
               <div style={{ fontSize: '1.75rem', fontWeight: 800, color: '#fff' }}>99.8%</div>
               <div style={{ fontSize: '0.85rem', color: 'var(--text-secondary)' }}>DGCA Examination Pass Rate</div>
             </div>
-          </div>
+          </WeightTiltCard>
 
-          <div className="glass-card" style={{ padding: '1.5rem', display: 'flex', alignItems: 'center', gap: '1rem' }}>
+          <WeightTiltCard className="glass-card" maxTilt={12} style={{ padding: '1.5rem', display: 'flex', alignItems: 'center', gap: '1rem' }}>
             <div
               style={{
                 width: '3rem',
@@ -421,7 +455,7 @@ export const Hero: React.FC<HeroProps> = ({
               <div style={{ fontSize: '1.75rem', fontWeight: 800, color: '#fff' }}>&lt; 2 Min</div>
               <div style={{ fontSize: '0.85rem', color: 'var(--text-secondary)' }}>AI Response Resolution</div>
             </div>
-          </div>
+          </WeightTiltCard>
         </div>
       </div>
 
