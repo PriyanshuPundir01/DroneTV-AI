@@ -320,10 +320,10 @@ From the `01_Source_Code` directory, launch both the Node.js API (Port 5000) and
 
 ```bash
 # 1. Clone repository
-git clone https://github.com/PriyanshuPundir01/DroneTV-AI.git
+git clone https://github.com/PriyanshuPundir01/FullStack_Chatbot_Task_Priyanshu_Pundir.git
 
 # 2. Navigate to source code root
-cd DroneTV-AI/01_Source_Code
+cd FullStack_Chatbot_Task_Priyanshu_Pundir/01_Source_Code
 
 # 3. Install all dependencies (frontend + backend)
 npm install
@@ -336,7 +336,7 @@ npm run dev
 
 #### Terminal 1 — Backend API
 ```bash
-cd DroneTV-AI/01_Source_Code/backend
+cd FullStack_Chatbot_Task_Priyanshu_Pundir/01_Source_Code/backend
 npm install
 npm run seed      # Populates realistic DroneTV commercial & student leads
 npm run dev       # Starts server on http://localhost:5000
@@ -344,7 +344,7 @@ npm run dev       # Starts server on http://localhost:5000
 
 #### Terminal 2 — Frontend Application
 ```bash
-cd DroneTV-AI/01_Source_Code/frontend
+cd FullStack_Chatbot_Task_Priyanshu_Pundir/01_Source_Code/frontend
 npm install
 npm run dev       # Starts Vite dev server on http://localhost:5173
 ```
@@ -396,7 +396,7 @@ This project was designed, developed, and submitted by <b>Priyanshu Pundir</b> i
 - **Email:** `priyanshupundir36@gmail.com`
 - **Phone:** `+91 9548014400`
 - **Office / Address:** Pundir Office, Bhagwan Singh Complex, 788, Gularghati Rd, Nathuwawala, Dehradun, Uttarakhand 248008
-- **GitHub Repository:** [https://github.com/PriyanshuPundir01/DroneTV-AI.git](https://github.com/PriyanshuPundir01/DroneTV-AI.git)
+- **GitHub Repository:** [https://github.com/PriyanshuPundir01/FullStack_Chatbot_Task_Priyanshu_Pundir](https://github.com/PriyanshuPundir01/FullStack_Chatbot_Task_Priyanshu_Pundir)
 - **Reference Context:** Inspired by [DroneTV.in](https://dronetv.in/)
 
 ---

@@ -40,7 +40,7 @@ git commit -m "feat: complete DroneTV Full Stack AI Support and Lead Assistant i
 git branch -M main
 
 # Link remote repository (replace with your personal GitHub username)
-git remote add origin https://github.com/PriyanshuPundir01/DroneTV-AI.git
+git remote add origin https://github.com/PriyanshuPundir01/FullStack_Chatbot_Task_Priyanshu_Pundir.git
 
 # Push to GitHub
 git push -u origin main
