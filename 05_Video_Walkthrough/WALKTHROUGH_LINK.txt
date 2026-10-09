@@ -7,18 +7,12 @@ Project Name   : FullStack_Chatbot_Task_Priyanshu_Pundir
 Role           : Full Stack Developer Intern — IPAGE Group
 
 ------------------------------------------------------------------------
-VIDEO LINK (Google Drive / Loom / YouTube Unlisted):
+VIDEO WALKTHROUGH URL (Google Drive):
 ------------------------------------------------------------------------
-[PASTE YOUR VIDEO WALKTHROUGH LINK HERE]
-
-Example:
-https://drive.google.com/file/d/YOUR_VIDEO_ID/view?usp=sharing
-or
-https://www.loom.com/share/YOUR_LOOM_ID
+https://drive.google.com/file/d/1wegXzvxixzkn-oJfcNOio3Co5NpTpDEN/view?usp=sharing
 
 ------------------------------------------------------------------------
-NOTE ON GOOGLE DRIVE ACCESS:
-Please ensure that the Google Drive folder permission is set to:
-"Anyone with the link – Viewer"
-so the evaluating engineering team can access the video seamlessly.
+ACCESS PERMISSION STATUS:
+- Sharing : Anyone with the link – Viewer
+- Duration: 5–10 Minutes Video Walkthrough
 ========================================================================

@@ -397,6 +397,7 @@ This project was designed, developed, and submitted by <b>Priyanshu Pundir</b> i
 - **Phone:** `+91 9548014400`
 - **Office / Address:** Pundir Office, Bhagwan Singh Complex, 788, Gularghati Rd, Nathuwawala, Dehradun, Uttarakhand 248008
 - **GitHub Repository:** [https://github.com/PriyanshuPundir01/FullStack_Chatbot_Task_Priyanshu_Pundir](https://github.com/PriyanshuPundir01/FullStack_Chatbot_Task_Priyanshu_Pundir)
+- **Video Walkthrough:** [Google Drive Video Demo (5–10 min)](https://drive.google.com/file/d/1wegXzvxixzkn-oJfcNOio3Co5NpTpDEN/view?usp=sharing)
 - **Reference Context:** Inspired by [DroneTV.in](https://dronetv.in/)
 
 ---
