@@ -2,11 +2,11 @@ import fs from 'fs';
 import path from 'path';
 import crypto from 'crypto';
 import mongoose from 'mongoose';
-import { EnquiryModel, IEnquiry, EnquiryStatus, UserType } from './enquiry.model';
+import { EnquiryModel, IEnquiry } from './enquiry.model';
 
 const DATA_DIR = path.resolve(__dirname, '../../data');
 const DATA_FILE = path.join(DATA_DIR, 'enquiries.json');
-const DEFAULT_DATA_FILE = path.join(__dirname, '../data/defaultEnquiries.json');
+const CANONICAL_SEED_FILE = path.resolve(__dirname, '../../../../04_Database/seed_data.json');
 
 // Ensure data directory exists
 if (!fs.existsSync(DATA_DIR)) {
@@ -15,8 +15,8 @@ if (!fs.existsSync(DATA_DIR)) {
 
 // Ensure local persistence file exists
 if (!fs.existsSync(DATA_FILE)) {
-  if (fs.existsSync(DEFAULT_DATA_FILE)) {
-    fs.copyFileSync(DEFAULT_DATA_FILE, DATA_FILE);
+  if (fs.existsSync(CANONICAL_SEED_FILE)) {
+    fs.copyFileSync(CANONICAL_SEED_FILE, DATA_FILE);
   } else {
     fs.writeFileSync(DATA_FILE, JSON.stringify([], null, 2), 'utf-8');
   }
@@ -91,7 +91,8 @@ export class EnquiryStore {
       }
 
       if (params.search && params.search.trim()) {
-        const regex = new RegExp(params.search.trim(), 'i');
+        const safeSearch = params.search.trim().replace(/[.*+?^${}()|[\]\\]/g, '\\$&').slice(0, 100);
+        const regex = new RegExp(safeSearch, 'i');
         query.$or = [
           { name: regex },
           { email: regex },

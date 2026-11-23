@@ -4,19 +4,17 @@ import path from 'path';
 import { EnquiryModel } from '../models/enquiry.model';
 import { config } from '../config/environment';
 
-const DEFAULT_DATA_PATH = path.resolve(__dirname, '../data/defaultEnquiries.json');
+const CANONICAL_SEED_PATH = path.resolve(__dirname, '../../../../04_Database/seed_data.json');
 const PERSISTENT_DATA_PATH = path.resolve(__dirname, '../../data/enquiries.json');
 
 async function runSeed() {
-  console.log('[Seed] Loading default sample enquiries...');
-  const rawData = fs.readFileSync(DEFAULT_DATA_PATH, 'utf-8');
+  console.log('[Seed] Loading canonical sample enquiries from 04_Database/seed_data.json...');
+  const rawData = fs.readFileSync(CANONICAL_SEED_PATH, 'utf-8');
   const sampleEnquiries = JSON.parse(rawData);
 
   // Check if MongoDB is connected or can be connected
-  let mongoConnected = false;
   try {
     await mongoose.connect(config.mongoUri, { serverSelectionTimeoutMS: 2000 });
-    mongoConnected = true;
     console.log('[Seed] Connected to MongoDB. Seeding database collection...');
 
     await EnquiryModel.deleteMany({});

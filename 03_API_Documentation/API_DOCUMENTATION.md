@@ -363,13 +363,18 @@ The API employs standard HTTP status codes:
 
 ## 5. Security & Authentication
 
-1. **Helmet:** Enforces secure HTTP response headers (`X-Content-Type-Options`, `X-Frame-Options`, etc.).
-2. **CORS:** Restricts cross-origin requests to configured trusted origins.
-3. **Input Sanitization:** Strips HTML/script tags from user inputs to prevent stored XSS.
-4. **Rate Limiting:** Prevents brute force and denial-of-service spamming.
-5. **Zero Secrets in Code:** Environment configuration managed via `.env`.
-6. **Administrator Authentication (Optional/Enforceable):**
-   - Endpoints support Bearer token authentication via the `Authorization: Bearer <token>` header or `x-admin-token` header.
-   - Default Demo Token: `dronetv_admin_session_auth_key_2026`
-   - Evaluation Mode: When no token is passed, standard evaluative queries execute seamlessly. When an invalid token is provided, requests are securely rejected with `401 Unauthorized`. To strictly require authentication on all admin endpoints, set `REQUIRE_ADMIN_AUTH=true` in `.env`.
+1. **Helmet:** Enforces secure HTTP response headers (`X-Content-Type-Options: nosniff`, `X-Frame-Options: DENY`, strict CSP, etc.).
+2. **CORS:** Restricts cross-origin requests to configured trusted origins (`CLIENT_URL` / `ALLOWED_ORIGINS`).
+3. **Input Sanitization & XSS Defense:** Recursively validates inputs and strips malicious script tags, HTML entities, event handlers, and null bytes to prevent stored and reflected XSS.
+4. **NoSQL Injection Defense:** Evaluates and rejects payload objects attempting operator injection (`$` or `.` keys).
+5. **Rate Limiting:** Protects endpoints with dedicated limiters:
+   - Admin Login (`/api/auth/login`): 10 attempts per 15 minutes.
+   - Lead Enquiry Creation (`/api/enquiries`): 15 submissions per 15 minutes.
+   - Chatbot Queries (`/api/chat/message`): 80 requests per 15 minutes.
+   - General API: 300 requests per 15 minutes.
+6. **Password Hashing & Cryptographic Auth:**
+   - Administrator passwords are computationally hashed using Node's `scrypt` algorithm with unique cryptographic salts.
+   - Session tokens are signed using HMAC-SHA256 with expiration checks and constant-time signature comparison to prevent timing attacks.
+   - Protected endpoints require `Authorization: Bearer <token>` or `x-admin-token`.
+   - Login via `POST /api/auth/login` with email and password returns a verified signed token.
 

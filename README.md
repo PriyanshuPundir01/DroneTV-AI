@@ -256,7 +256,7 @@ The backend exposes a strictly typed, standard RESTful API adhering to HTTP sema
 <h2 id="07-directory-structure" style="font-family: 'Bookman Old Style', 'URW Bookman', 'Georgia', serif; color: #00ff99;">📂 07. Directory Structure</h2>
 
 <p style="font-family: 'Bookman Old Style', 'URW Bookman', serif; font-size: 1.02rem;">
-The repository strictly mirrors the <b>7 canonical submission subfolders</b> prescribed by the IPAGE Group technical evaluation rubric:
+The repository structure of the project:
 </p>
 
 ```
@@ -279,6 +279,7 @@ FullStack_Chatbot_Task_Priyanshu_Pundir/
 │   │   │   ├── assets/                    # Aerospace vectors & branding
 │   │   │   ├── components/
 │   │   │   │   ├── AdminDashboard.tsx     # Mission Control CRM with live search & filters
+│   │   │   │   ├── AdminLoginModal.tsx    # Secure Administrator authentication modal
 │   │   │   │   ├── ChatbotWidget.tsx      # Rule-based conversational AI widget
 │   │   │   │   ├── CustomCursor.tsx       # Quadcopter cursor with spinning rotors & trail
 │   │   │   │   ├── WeightTiltCard.tsx     # 3D physical weight-tilt card wrapper
@@ -294,13 +295,9 @@ FullStack_Chatbot_Task_Priyanshu_Pundir/
 │   │   │   └── App.tsx                    # Master layout & view controller
 │   │   ├── package.json
 │   │   └── vite.config.js
-│   └── package.json                       # Monorepo runner for concurrent development
 ├── 📁 02_Screenshots/                     # 7 Full-HD verified interface screenshots
 ├── 📁 03_API_Documentation/               # Comprehensive REST API guide & Postman Collection
 ├── 📁 04_Database/                        # PostgreSQL schema.sql, MongoDB schema & seed data
-├── 📁 05_Video_Walkthrough/               # 5-10 minute presentation guide, script & link file
-├── 📁 06_GitHub/                          # Repository link & Git submission guide
-├── 📁 07_Resume/                          # Priyanshu Pundir updated resume PDF & guide
 ├── .gitignore                             # Secret & build artifact exclusion rules
 └── README.md                              # Primary master platform documentation
 ```
@@ -316,27 +313,24 @@ FullStack_Chatbot_Task_Priyanshu_Pundir/
 
 ### 🛠️ Option 1: Run Full Stack Concurrently (Recommended)
 
-From the `01_Source_Code` directory, launch both the Node.js API (Port 5000) and the React Frontend (Port 5173) in one synchronized process:
+From `01_Source_Code/backend`, launch both the Node.js API (Port 5000) and the React Frontend (Port 5173) simultaneously:
 
 ```bash
-# 1. Clone repository
-git clone https://github.com/PriyanshuPundir01/FullStack_Chatbot_Task_Priyanshu_Pundir.git
+# 1. Navigate to backend directory
+cd 01_Source_Code/backend
 
-# 2. Navigate to source code root
-cd FullStack_Chatbot_Task_Priyanshu_Pundir/01_Source_Code
-
-# 3. Install all dependencies (frontend + backend)
+# 2. Install dependencies (if not already installed)
 npm install
 
-# 4. Launch both servers concurrently
-npm run dev
+# 3. Launch both servers concurrently
+npm run dev:all
 ```
 
 ### 🛠️ Option 2: Run in Separate Terminals
 
 #### Terminal 1 — Backend API
 ```bash
-cd FullStack_Chatbot_Task_Priyanshu_Pundir/01_Source_Code/backend
+cd 01_Source_Code/backend
 npm install
 npm run seed      # Populates realistic DroneTV commercial & student leads
 npm run dev       # Starts server on http://localhost:5000
@@ -344,7 +338,7 @@ npm run dev       # Starts server on http://localhost:5000
 
 #### Terminal 2 — Frontend Application
 ```bash
-cd FullStack_Chatbot_Task_Priyanshu_Pundir/01_Source_Code/frontend
+cd 01_Source_Code/frontend
 npm install
 npm run dev       # Starts Vite dev server on http://localhost:5173
 ```
@@ -353,8 +347,8 @@ npm run dev       # Starts Vite dev server on http://localhost:5173
 - **Frontend Portal**: [http://localhost:5173](http://localhost:5173)
 - **Backend Health Check**: [http://localhost:5000/api/health](http://localhost:5000/api/health)
 - **Admin CRM Credentials**:
-  - **Username**: `admin`
-  - **Password**: `dronetv2025`
+  - **Email**: `admin@dronetv.in`
+  - **Password / Access Key**: `DroneTV@2026` (or click "Use Demo Credentials" in the login modal)
 
 ---
 
@@ -368,7 +362,7 @@ npm run dev       # Starts Vite dev server on http://localhost:5173
 5. **Confirmation**: Receive instant acoustic confirmation, validation green lights, and a unique tracking reference.
 
 ### 🛡️ 2. Admin Triage & Pipeline Mutation Flow
-1. **Access CRM**: Click **Admin Portal** in the navigation bar and authenticate using credentials (`admin` / `dronetv2025`).
+1. **Access CRM**: Click **Admin Portal** in the navigation bar and authenticate using credentials (`admin@dronetv.in` / `DroneTV@2026` or use demo autofill).
 2. **Review Metrics**: Inspect KPI metric cards displaying total lead volume and breakdown across `New`, `Contacted`, `In Progress`, and `Closed`.
 3. **Filter & Search**: Type any candidate name, email, or course name into the real-time search field; results update instantaneously.
 4. **Deep Inspection**: Click the **View** icon on any enquiry row to inspect full message bodies, timestamp audits, and contact coordinates.

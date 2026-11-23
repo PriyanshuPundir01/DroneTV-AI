@@ -7,8 +7,7 @@ import {
   AlertCircle,
   Loader2,
   X,
-  Sparkles,
-  CheckCircle2
+  Sparkles
 } from 'lucide-react';
 import { api, AdminUser } from '../services/api';
 
@@ -25,12 +24,12 @@ export const AdminLoginModal: React.FC<AdminLoginModalProps> = ({
   onSuccess,
   showToast
 }) => {
-  if (!isOpen) return null;
-
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+
+  if (!isOpen) return null;
 
   const handleLogin = async (e?: React.FormEvent) => {
     if (e) e.preventDefault();

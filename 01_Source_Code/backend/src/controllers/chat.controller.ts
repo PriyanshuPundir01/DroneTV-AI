@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import { processChatQuery, PREDEFINED_RULES } from '../services/ruleBasedChatbot';
+import { sanitizeString } from '../middleware/validateEnquiry';
 
 export function getQuickQuestions(req: Request, res: Response): void {
   const questions = PREDEFINED_RULES.map((rule) => ({
@@ -16,7 +17,7 @@ export function getQuickQuestions(req: Request, res: Response): void {
 export function handleChatMessage(req: Request, res: Response): void {
   const { message } = req.body;
 
-  if (message !== undefined && typeof message !== 'string') {
+  if (message === undefined || typeof message !== 'string') {
     res.status(400).json({
       success: false,
       message: 'Query message must be a valid string.'
@@ -24,12 +25,14 @@ export function handleChatMessage(req: Request, res: Response): void {
     return;
   }
 
-  const botResult = processChatQuery(message || '');
+  // Sanitize and enforce maximum length to prevent resource exhaustion
+  const cleanMessage = sanitizeString(message).slice(0, 1000);
+  const botResult = processChatQuery(cleanMessage);
 
   res.status(200).json({
     success: true,
     data: {
-      userMessage: message || '',
+      userMessage: cleanMessage,
       reply: botResult.answer,
       matchedRule: botResult.matchedRule,
       suggestions: botResult.suggestions,

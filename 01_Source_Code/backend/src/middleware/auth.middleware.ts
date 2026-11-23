@@ -1,9 +1,13 @@
 import { Request, Response, NextFunction } from 'express';
+import { verifyAdminToken, hashPassword } from '../utils/security';
+import { config } from '../config/environment';
 
-export const ADMIN_CREDENTIALS = {
-  email: process.env.ADMIN_EMAIL || 'admin@dronetv.in',
-  password: process.env.ADMIN_PASSWORD || 'DroneTV@2026',
-  token: process.env.ADMIN_SESSION_TOKEN || 'dronetv_admin_session_auth_key_2026'
+const initialHash = hashPassword(config.adminPassword);
+
+export const ADMIN_AUTH_STORE = {
+  email: config.adminEmail,
+  salt: initialHash.salt,
+  hash: initialHash.hash
 };
 
 export interface AuthenticatedRequest extends Request {
@@ -18,10 +22,36 @@ export function requireAdminAuth(
   res: Response,
   next: NextFunction
 ): void {
-  // Allow direct access without password/token requirement
+  const authHeader = req.headers.authorization;
+  const customHeader = req.headers['x-admin-token'];
+
+  let token = '';
+  if (authHeader && authHeader.startsWith('Bearer ')) {
+    token = authHeader.substring(7).trim();
+  } else if (typeof customHeader === 'string') {
+    token = customHeader.trim();
+  }
+
+  if (!token) {
+    res.status(401).json({
+      success: false,
+      message: 'Authentication required. No session token provided.'
+    });
+    return;
+  }
+
+  const payload = verifyAdminToken(token);
+  if (!payload) {
+    res.status(401).json({
+      success: false,
+      message: 'Access denied. Administrator token is invalid or expired.'
+    });
+    return;
+  }
+
   req.adminUser = {
-    email: ADMIN_CREDENTIALS.email,
-    role: 'Administrator'
+    email: payload.email,
+    role: payload.role
   };
 
   next();

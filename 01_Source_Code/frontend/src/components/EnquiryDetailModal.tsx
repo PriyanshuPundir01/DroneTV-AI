@@ -4,15 +4,11 @@ import {
   User,
   Mail,
   Phone,
-  Calendar,
   Briefcase,
   MessageSquare,
-  ShieldAlert,
   Save,
   Trash2,
-  CheckCircle,
   Clock,
-  CheckCircle2,
   Tag
 } from 'lucide-react';
 import { Enquiry, EnquiryStatus } from '../types/enquiry';
@@ -30,12 +26,12 @@ export const EnquiryDetailModal: React.FC<EnquiryDetailModalProps> = ({
   onStatusChange,
   onDelete
 }) => {
-  if (!enquiry) return null;
-
-  const [currentStatus, setCurrentStatus] = useState<EnquiryStatus>(enquiry.status);
-  const [adminNotes, setAdminNotes] = useState(enquiry.adminNotes || '');
+  const [currentStatus, setCurrentStatus] = useState<EnquiryStatus>(() => enquiry?.status || 'New');
+  const [adminNotes, setAdminNotes] = useState(() => enquiry?.adminNotes || '');
   const [isUpdating, setIsUpdating] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
+
+  if (!enquiry) return null;
 
   const handleSave = async () => {
     setIsUpdating(true);

@@ -7,10 +7,11 @@ import { ServicesSection } from './components/ServicesSection';
 import { CoursesSection } from './components/CoursesSection';
 import { EnquiryForm } from './components/EnquiryForm';
 import { AdminDashboard } from './components/AdminDashboard';
+import { AdminLoginModal } from './components/AdminLoginModal';
 import { ChatbotWidget } from './components/ChatbotWidget';
 import { Footer } from './components/Footer';
 import { ToastContainer, ToastMessage } from './components/Toast';
-import { AdminUser } from './services/api';
+import { api, AdminUser } from './services/api';
 
 export function App() {
   const [activeTab, setActiveTab] = useState<'home' | 'services' | 'courses' | 'contact' | 'admin'>('home');
@@ -18,19 +19,14 @@ export function App() {
   const [prefilledInterest, setPrefilledInterest] = useState<string>('');
   const [toasts, setToasts] = useState<ToastMessage[]>([]);
   const [showIntro, setShowIntro] = useState<boolean>(true);
-
-  const defaultAdminUser: AdminUser = {
-    name: 'Priyanshu Pundir',
-    email: 'admin@dronetv.in',
-    role: 'Lead Administrator'
-  };
+  const [adminUser, setAdminUser] = useState<AdminUser | null>(() => api.getAdminUser());
+  const [showAdminLoginModal, setShowAdminLoginModal] = useState<boolean>(false);
 
   const showToast = (type: 'success' | 'error' | 'info', message: string, title?: string) => {
     const id = `toast-${Date.now()}-${Math.random()}`;
     const newToast: ToastMessage = { id, type, title, message };
     setToasts((prev) => [...prev, newToast]);
 
-    // Auto dismiss after 5 seconds
     setTimeout(() => {
       setToasts((prev) => prev.filter((t) => t.id !== id));
     }, 5000);
@@ -62,35 +58,62 @@ export function App() {
     } else if (sectionId === 'contact') {
       setActiveTab('contact');
     } else if (sectionId === 'admin') {
-      setActiveTab('admin');
+      if (api.isAdminAuthenticated() && adminUser) {
+        setActiveTab('admin');
+      } else {
+        setShowAdminLoginModal(true);
+      }
     } else {
       setActiveTab('home');
     }
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
+  const handleAdminTabClick = (tab: 'home' | 'services' | 'courses' | 'contact' | 'admin') => {
+    if (tab === 'admin') {
+      if (api.isAdminAuthenticated() && adminUser) {
+        setActiveTab('admin');
+      } else {
+        setShowAdminLoginModal(true);
+      }
+    } else {
+      setActiveTab(tab);
+    }
+  };
+
+  const handleAdminLoginSuccess = (user: AdminUser) => {
+    setAdminUser(user);
+    setShowAdminLoginModal(false);
+    setActiveTab('admin');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const handleLogout = () => {
+    api.clearAdminSession();
+    setAdminUser(null);
+    setActiveTab('home');
+    showToast('info', 'Logged out of Admin Portal successfully.', 'Signed Out');
+  };
+
   return (
     <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
-      {/* DroneTV Cinematic Boot & Startup Introduction Animation */}
       {showIntro && (
         <DroneTVIntroAnimation onComplete={() => setShowIntro(false)} />
       )}
 
-      {/* Aerospace Drone Telemetry Reticle Cursor */}
       <CustomCursor />
 
-      {/* Toast Notification Container */}
       <ToastContainer toasts={toasts} onDismiss={dismissToast} />
 
-      {/* Primary Navigation Bar */}
       <Navbar
         activeTab={activeTab}
-        setActiveTab={setActiveTab}
+        setActiveTab={handleAdminTabClick}
         openChatbot={() => setIsChatbotOpen(true)}
         onReplayIntro={() => setShowIntro(true)}
+        isAdminAuthenticated={Boolean(adminUser)}
+        onOpenAdminLogin={() => setShowAdminLoginModal(true)}
       />
 
-      {/* Main View Area */}
       <main style={{ flex: 1 }}>
         {activeTab === 'home' && (
           <>
@@ -111,9 +134,6 @@ export function App() {
             <EnquiryForm
               prefilledInterest={prefilledInterest}
               showToast={showToast}
-              onSuccess={() => {
-                // Enquiry submitted successfully
-              }}
             />
           </>
         )}
@@ -135,22 +155,43 @@ export function App() {
             <EnquiryForm
               prefilledInterest={prefilledInterest}
               showToast={showToast}
-              onSuccess={() => {
-                // Success action
-              }}
             />
           </div>
         )}
 
         {activeTab === 'admin' && (
-          <AdminDashboard
-            showToast={showToast}
-            adminUser={defaultAdminUser}
-          />
+          adminUser && api.isAdminAuthenticated() ? (
+            <AdminDashboard
+              showToast={showToast}
+              adminUser={adminUser}
+              onLogout={handleLogout}
+            />
+          ) : (
+            <div style={{ padding: '6rem 1rem', textAlign: 'center' }}>
+              <button
+                className="btn btn-primary"
+                onClick={() => setShowAdminLoginModal(true)}
+              >
+                Open Admin Login
+              </button>
+            </div>
+          )
         )}
       </main>
 
-      {/* Floating AI Chatbot Widget */}
+      {/* Admin Authentication Modal */}
+      <AdminLoginModal
+        isOpen={showAdminLoginModal}
+        onClose={() => {
+          setShowAdminLoginModal(false);
+          if (activeTab === 'admin' && (!adminUser || !api.isAdminAuthenticated())) {
+            setActiveTab('home');
+          }
+        }}
+        onSuccess={handleAdminLoginSuccess}
+        showToast={showToast}
+      />
+
       <ChatbotWidget
         isOpen={isChatbotOpen}
         onOpen={() => setIsChatbotOpen(true)}
@@ -163,9 +204,8 @@ export function App() {
         }}
       />
 
-      {/* Aerospace Footer */}
       <Footer
-        onNavigate={setActiveTab}
+        onNavigate={handleAdminTabClick}
         onOpenChat={() => setIsChatbotOpen(true)}
       />
     </div>

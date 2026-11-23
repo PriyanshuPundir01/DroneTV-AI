@@ -12,13 +12,11 @@ import {
   validateUpdateEnquiry
 } from '../middleware/validateEnquiry';
 import { requireAdminAuth } from '../middleware/auth.middleware';
+import { enquirySubmissionLimiter } from '../middleware/rateLimiter';
 
 const router = Router();
 
-// PUBLIC ENDPOINT: Anyone can submit a student or customer lead enquiry
-router.post('/', validateCreateEnquiry, createEnquiry);
-
-// PROTECTED ENDPOINTS: Requires Administrator authentication to view, edit, or delete leads
+router.post('/', enquirySubmissionLimiter, validateCreateEnquiry, createEnquiry);
 router.get('/stats/summary', requireAdminAuth, getEnquiryStats);
 router.get('/', requireAdminAuth, getEnquiries);
 router.get('/:id', requireAdminAuth, getEnquiryById);

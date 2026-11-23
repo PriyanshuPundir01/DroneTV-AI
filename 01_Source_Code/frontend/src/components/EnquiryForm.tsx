@@ -12,7 +12,7 @@ import {
   Loader2,
   Sparkles
 } from 'lucide-react';
-import { CreateEnquiryInput, UserType } from '../types/enquiry';
+import { CreateEnquiryInput } from '../types/enquiry';
 import { api } from '../services/api';
 
 interface EnquiryFormProps {
@@ -111,7 +111,15 @@ export const EnquiryForm: React.FC<EnquiryFormProps> = ({
 
     setIsSubmitting(true);
     try {
-      const response = await api.createEnquiry(formData);
+      const sanitizedPayload: CreateEnquiryInput = {
+        name: formData.name.trim().replace(/[<>]/g, '').slice(0, 100),
+        email: formData.email.trim().toLowerCase().slice(0, 100),
+        phone: formData.phone.trim().slice(0, 20),
+        userType: formData.userType,
+        interest: formData.interest.trim().replace(/[<>]/g, '').slice(0, 150),
+        message: formData.message.trim().replace(/[<>]/g, '').slice(0, 2000)
+      };
+      const response = await api.createEnquiry(sanitizedPayload);
       if (response.success) {
         setSubmittedSuccessfully(true);
         showToast(

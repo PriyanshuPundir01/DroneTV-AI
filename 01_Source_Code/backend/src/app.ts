@@ -1,59 +1,68 @@
 import express, { Application, Request, Response } from 'express';
 import cors from 'cors';
 import helmet from 'helmet';
-import rateLimit from 'express-rate-limit';
 import enquiryRoutes from './routes/enquiry.routes';
 import chatRoutes from './routes/chat.routes';
 import authRoutes from './routes/auth.routes';
 import { errorHandler, notFoundHandler } from './middleware/errorHandler';
+import { sanitizeNoSqlInjection } from './middleware/validateEnquiry';
+import { generalApiLimiter } from './middleware/rateLimiter';
 import { getDbStatus } from './config/database';
 import { config } from './config/environment';
 
 const app: Application = express();
 
-// Security HTTP headers
-app.use(helmet());
+app.disable('x-powered-by');
 
-// Cross-Origin Resource Sharing
 app.use(
-  cors({
-    origin: (origin, callback) => {
-      // Allow requests with no origin (like mobile apps, curl, or Postman)
-      if (!origin) return callback(null, true);
-      // Allow localhost frontend on standard development ports
-      if (
-        origin.startsWith('http://localhost') ||
-        origin.startsWith('http://127.0.0.1') ||
-        origin === config.clientUrl
-      ) {
-        return callback(null, true);
+  helmet({
+    contentSecurityPolicy: {
+      directives: {
+        defaultSrc: ["'self'"],
+        scriptSrc: ["'self'", "'unsafe-inline'"],
+        styleSrc: ["'self'", "'unsafe-inline'", 'https://fonts.googleapis.com'],
+        fontSrc: ["'self'", 'https://fonts.gstatic.com', 'data:'],
+        imgSrc: ["'self'", 'data:', 'blob:', 'https:'],
+        connectSrc: ["'self'", 'http://localhost:*', 'http://127.0.0.1:*', config.clientUrl]
       }
-      return callback(null, true); // Permissive in dev mode
     },
-    credentials: true,
-    methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
-    allowedHeaders: ['Content-Type', 'Authorization', 'Accept']
+    crossOriginEmbedderPolicy: false,
+    crossOriginResourcePolicy: { policy: 'cross-origin' },
+    referrerPolicy: { policy: 'strict-origin-when-cross-origin' },
+    hsts: config.isProduction ? { maxAge: 31536000, includeSubDomains: true } : false,
+    frameguard: { action: 'deny' },
+    noSniff: true
   })
 );
 
-// Rate limiter: max 200 requests per 15 minutes per IP
-const apiLimiter = rateLimit({
-  windowMs: 15 * 60 * 1000,
-  max: 250,
-  standardHeaders: true,
-  legacyHeaders: false,
-  message: {
-    success: false,
-    message: 'Too many requests created from this IP, please try again after 15 minutes.'
-  }
-});
-app.use('/api', apiLimiter);
+app.use(
+  cors({
+    origin: (origin, callback) => {
+      if (!origin) return callback(null, true);
+      if (config.isProduction) {
+        if (config.allowedOrigins.includes(origin)) return callback(null, true);
+        return callback(new Error(`Origin ${origin} not allowed by CORS.`));
+      }
+      if (
+        origin.startsWith('http://localhost') ||
+        origin.startsWith('http://127.0.0.1') ||
+        config.allowedOrigins.includes(origin)
+      ) {
+        return callback(null, true);
+      }
+      return callback(null, true);
+    },
+    credentials: true,
+    methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization', 'Accept', 'x-admin-token']
+  })
+);
 
-// Body parser with size safety
-app.use(express.json({ limit: '1mb' }));
-app.use(express.urlencoded({ extended: true, limit: '1mb' }));
+app.use(express.json({ limit: '500kb' }));
+app.use(express.urlencoded({ extended: true, limit: '500kb' }));
+app.use('/api', sanitizeNoSqlInjection);
+app.use('/api', generalApiLimiter);
 
-// Health Check API
 app.get('/api/health', (req: Request, res: Response) => {
   const dbStatus = getDbStatus();
   res.status(200).json({
@@ -62,19 +71,18 @@ app.get('/api/health', (req: Request, res: Response) => {
     service: 'DroneTV AI Support & Lead Assistant API',
     uptimeSeconds: Math.floor(process.uptime()),
     timestamp: new Date().toISOString(),
-    database: dbStatus
+    database: {
+      connected: dbStatus.connected,
+      type: dbStatus.type
+    }
   });
 });
 
-// Mount modular API routes
 app.use('/api/auth', authRoutes);
 app.use('/api/enquiries', enquiryRoutes);
 app.use('/api/chat', chatRoutes);
 
-// Catch-all 404 handler
 app.use(notFoundHandler);
-
-// Central error handler
 app.use(errorHandler);
 
 export default app;

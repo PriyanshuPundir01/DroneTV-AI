@@ -1,15 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import {
   Sparkles,
   Volume2,
   VolumeX,
   FastForward,
-  Radio,
-  CheckCircle2,
-  Cpu,
-  Layers,
-  Activity,
-  Compass
+  CheckCircle2
 } from 'lucide-react';
 import { soundFx } from '../utils/soundEffects';
 
@@ -32,13 +27,13 @@ export const DroneTVIntroAnimation: React.FC<DroneTVIntroAnimationProps> = ({ on
     setIsMuted(muted);
   };
 
-  const finishIntro = () => {
+  const finishIntro = useCallback(() => {
     setIsExiting(true);
     soundFx.playSuccess();
     setTimeout(() => {
       onComplete();
     }, 450);
-  };
+  }, [onComplete]);
 
   // Listen for Escape or Space to skip
   useEffect(() => {
@@ -49,7 +44,7 @@ export const DroneTVIntroAnimation: React.FC<DroneTVIntroAnimationProps> = ({ on
     };
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, []);
+  }, [finishIntro]);
 
   // Multi-phase timeline
   useEffect(() => {
@@ -102,7 +97,7 @@ export const DroneTVIntroAnimation: React.FC<DroneTVIntroAnimationProps> = ({ on
       clearTimeout(p4Timer);
       clearTimeout(endTimer);
     };
-  }, []);
+  }, [finishIntro]);
 
   return (
     <div

@@ -36,7 +36,7 @@ class ApiService {
         localStorage.setItem(USER_KEY, JSON.stringify(user));
       }
     } catch {
-      // Ignored
+      // Storage unavailable
     }
   }
 
@@ -47,7 +47,7 @@ class ApiService {
       localStorage.removeItem(TOKEN_KEY);
       localStorage.removeItem(USER_KEY);
     } catch {
-      // Ignored
+      // Storage unavailable
     }
   }
 
@@ -61,7 +61,7 @@ class ApiService {
   }
 
   isAdminAuthenticated(): boolean {
-    return true;
+    return Boolean(this.getAuthToken());
   }
 
   private async request<T>(
@@ -69,12 +69,12 @@ class ApiService {
     options: RequestInit = {}
   ): Promise<ApiResponse<T>> {
     const url = `${API_BASE}${endpoint}`;
-    const token = this.getAuthToken() || 'dronetv_admin_session_auth_key_2026';
+    const token = this.getAuthToken();
 
     const headers: Record<string, string> = {
       'Content-Type': 'application/json',
       Accept: 'application/json',
-      Authorization: `Bearer ${token}`,
+      ...(token ? { Authorization: `Bearer ${token}` } : {}),
       ...((options.headers as Record<string, string>) || {})
     };
 
@@ -86,6 +86,9 @@ class ApiService {
       }));
 
       if (!response.ok) {
+        if (response.status === 401) {
+          this.clearAdminSession();
+        }
         const error = new Error(data.message || `Request failed with status ${response.status}`) as any;
         error.status = response.status;
         error.errors = data.errors;
@@ -95,7 +98,6 @@ class ApiService {
       return data as ApiResponse<T>;
     } catch (err: any) {
       if (!err.status) {
-        // Network failure or backend offline
         const networkErr = new Error(
           'Unable to reach DroneTV backend API. Please make sure the backend server is running on port 5000.'
         ) as any;

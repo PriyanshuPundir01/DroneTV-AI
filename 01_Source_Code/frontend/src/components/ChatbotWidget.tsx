@@ -4,15 +4,12 @@ import {
   Send,
   X,
   RotateCcw,
-  Sparkles,
   User,
   ArrowRight,
   Loader2,
   FileText,
   AlertCircle,
-  CheckCircle2,
-  Minimize2,
-  Maximize2
+  CheckCircle2
 } from 'lucide-react';
 import { ChatMessage, QuickQuestionItem } from '../types/chat';
 import { CreateEnquiryInput } from '../types/enquiry';
@@ -76,7 +73,7 @@ export const ChatbotWidget: React.FC<ChatbotWidgetProps> = ({
   onClose,
   onOpen,
   onNavigateToSection,
-  onOpenEnquiryModalWithInterest
+  onOpenEnquiryModalWithInterest: _onOpenEnquiryModalWithInterest
 }) => {
   const [messages, setMessages] = useState<ChatMessage[]>(() => {
     try {
@@ -109,6 +106,10 @@ export const ChatbotWidget: React.FC<ChatbotWidgetProps> = ({
 
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
+  const scrollToBottom = () => {
+    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+  };
+
   // Persist session history
   useEffect(() => {
     try {
@@ -118,10 +119,6 @@ export const ChatbotWidget: React.FC<ChatbotWidgetProps> = ({
     }
     scrollToBottom();
   }, [messages, showInChatForm]);
-
-  const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
-  };
 
   const handleSendMessage = async (textToSend?: string) => {
     const query = (textToSend !== undefined ? textToSend : inputText).trim();
@@ -240,8 +237,12 @@ export const ChatbotWidget: React.FC<ChatbotWidgetProps> = ({
     setIsSubmittingLead(true);
     try {
       const payload: CreateEnquiryInput = {
-        ...leadForm,
-        interest: inChatInterest || leadForm.interest
+        name: leadForm.name.trim().replace(/[<>]/g, '').slice(0, 100),
+        email: leadForm.email.trim().toLowerCase().slice(0, 100),
+        phone: leadForm.phone.trim().slice(0, 20),
+        userType: leadForm.userType,
+        interest: (inChatInterest || leadForm.interest).replace(/[<>]/g, '').slice(0, 150),
+        message: leadForm.message.trim().replace(/[<>]/g, '').slice(0, 2000)
       };
 
       const res = await api.createEnquiry(payload);

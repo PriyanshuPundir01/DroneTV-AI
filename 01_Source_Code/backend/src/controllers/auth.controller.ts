@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
-import { ADMIN_CREDENTIALS } from '../middleware/auth.middleware';
+import { ADMIN_AUTH_STORE } from '../middleware/auth.middleware';
+import { verifyPassword, generateAdminToken, verifyAdminToken } from '../utils/security';
 
 export function loginAdmin(req: Request, res: Response): void {
   const { email, password } = req.body;
@@ -7,26 +8,27 @@ export function loginAdmin(req: Request, res: Response): void {
   if (!email || !password) {
     res.status(400).json({
       success: false,
-      message: 'Both administrator email and password are required.'
+      message: 'Email and access key are required.'
     });
     return;
   }
 
   const normalizedEmail = String(email).trim().toLowerCase();
-  const rawPassword = String(password).trim();
+  const rawPassword = String(password);
 
-  if (
-    normalizedEmail === ADMIN_CREDENTIALS.email.toLowerCase() &&
-    rawPassword === ADMIN_CREDENTIALS.password
-  ) {
+  const isEmailMatch = normalizedEmail === ADMIN_AUTH_STORE.email;
+  const isPasswordValid = verifyPassword(rawPassword, ADMIN_AUTH_STORE.salt, ADMIN_AUTH_STORE.hash);
+
+  if (isEmailMatch && isPasswordValid) {
+    const token = generateAdminToken(ADMIN_AUTH_STORE.email, 'Administrator');
     res.status(200).json({
       success: true,
-      message: 'Administrator authentication successful.',
+      message: 'Authentication verified.',
       data: {
-        token: ADMIN_CREDENTIALS.token,
+        token,
         user: {
           name: 'Flight Operations Director',
-          email: ADMIN_CREDENTIALS.email,
+          email: ADMIN_AUTH_STORE.email,
           role: 'Administrator'
         }
       }
@@ -36,7 +38,7 @@ export function loginAdmin(req: Request, res: Response): void {
 
   res.status(401).json({
     success: false,
-    message: 'Invalid administrator credentials. Access denied.'
+    message: 'Invalid administrator credentials.'
   });
 }
 
@@ -51,13 +53,15 @@ export function verifyAdminSession(req: Request, res: Response): void {
     token = customHeader.trim();
   }
 
-  if (token === ADMIN_CREDENTIALS.token) {
+  const payload = verifyAdminToken(token);
+
+  if (payload) {
     res.status(200).json({
       success: true,
       valid: true,
       data: {
-        email: ADMIN_CREDENTIALS.email,
-        role: 'Administrator'
+        email: payload.email,
+        role: payload.role
       }
     });
     return;

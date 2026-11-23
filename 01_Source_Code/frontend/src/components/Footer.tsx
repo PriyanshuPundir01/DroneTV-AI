@@ -1,5 +1,7 @@
 import React from 'react';
-import { ShieldCheck, Heart, ExternalLink, Mail, Phone, MapPin } from 'lucide-react';
+import { ShieldCheck, ExternalLink, Mail, Phone, MapPin } from 'lucide-react';
+
+const CURRENT_YEAR = new Date().getFullYear();
 
 interface FooterProps {
   onNavigate: (tab: 'home' | 'services' | 'courses' | 'contact' | 'admin') => void;
@@ -155,7 +157,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate, onOpenChat }) => {
           }}
         >
           <div>
-            © {new Date().getFullYear()} DroneTV AI Support & Lead Assistant. Reference website context from{' '}
+            © {CURRENT_YEAR} DroneTV AI Support & Lead Assistant. Reference website context from{' '}
             <a
               href="https://dronetv.in"
               target="_blank"

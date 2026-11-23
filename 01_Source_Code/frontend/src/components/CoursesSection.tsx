@@ -8,8 +8,7 @@ import {
   ArrowRight,
   ShieldCheck,
   CheckCircle,
-  Zap,
-  Info
+  Zap
 } from 'lucide-react';
 
 interface CoursesSectionProps {

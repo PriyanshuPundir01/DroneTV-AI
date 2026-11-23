@@ -1,21 +1,13 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import {
   Search,
-  Filter,
   RefreshCw,
   Eye,
   Trash2,
-  ChevronDown,
   Download,
   ShieldCheck,
-  CheckCircle2,
-  Clock,
   AlertCircle,
-  FileSpreadsheet,
   ArrowUpDown,
-  Layers,
-  Users,
-  Briefcase,
   LogOut,
   UserCheck
 } from 'lucide-react';
@@ -41,7 +33,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
   const [userTypeFilter, setUserTypeFilter] = useState<string>('All');
   const [statusFilter, setStatusFilter] = useState<string>('All');
   const [selectedEnquiry, setSelectedEnquiry] = useState<Enquiry | null>(null);
-  const [sortBy, setSortBy] = useState<string>('createdAt');
+  const [sortBy] = useState<string>('createdAt');
   const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('desc');
 
   const fetchEnquiries = useCallback(async () => {

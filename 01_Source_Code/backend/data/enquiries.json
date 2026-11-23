@@ -1,31 +1,5 @@
 [
   {
-    "_id": "902338f575eeb528e8c3f0e2",
-    "name": "Priyanshu Pundir",
-    "email": "priyanshupundir36@gmail.com",
-    "phone": "9548014400",
-    "userType": "Student",
-    "interest": "DGCA Certified Remote Pilot Training",
-    "message": "hello",
-    "status": "In Progress",
-    "adminNotes": "",
-    "createdAt": "2026-10-08T21:12:16.167Z",
-    "updatedAt": "2026-10-08T21:13:02.843Z"
-  },
-  {
-    "_id": "e9b3c6f30ef99f33adf36e4b",
-    "name": "Public Prospective Student",
-    "email": "student.public@example.com",
-    "phone": "+91 91234 56789",
-    "userType": "Student",
-    "interest": "DGCA Certified Remote Pilot Training",
-    "message": "Can I apply directly without admin credentials?",
-    "status": "New",
-    "adminNotes": "",
-    "createdAt": "2026-10-06T16:55:30.795Z",
-    "updatedAt": "2026-10-06T16:55:30.795Z"
-  },
-  {
     "_id": "66f50001a1b2c3d4e5f60001",
     "name": "Aarav Sharma",
     "email": "aarav.sharma@example.com",
@@ -46,10 +20,10 @@
     "userType": "Customer",
     "interest": "Agricultural Drone Spraying & Survey",
     "message": "We have 250 acres of agricultural land in Gujarat requiring multispectral NDVI mapping and targeted nutrient spraying. Need a commercial quotation and pilot deployment schedule.",
-    "status": "In Progress",
+    "status": "Contacted",
     "adminNotes": "Shared technical quotation. Commercial negotiation scheduled for Thursday.",
     "createdAt": "2026-10-03T14:30:00.000Z",
-    "updatedAt": "2026-10-05T11:00:00.000Z"
+    "updatedAt": "2026-11-23T13:54:07.075Z"
   },
   {
     "_id": "66f50003a1b2c3d4e5f60003",
