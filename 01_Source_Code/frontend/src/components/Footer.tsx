@@ -31,7 +31,19 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate, onOpenChat }) => {
         >
           {/* Brand info */}
           <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem' }}>
+            <a
+              href="https://dronetv-ai.vercel.app/"
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: '0.6rem',
+                textDecoration: 'none',
+                cursor: 'pointer'
+              }}
+              title="DroneTV — AI Support & Lead Assistant | Aerial Ecosystem"
+            >
               <span style={{ fontSize: '1.5rem' }}>🛸</span>
               <span
                 style={{
@@ -43,7 +55,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate, onOpenChat }) => {
               >
                 Drone<span style={{ color: 'var(--accent-cyan)' }}>TV</span>
               </span>
-            </div>
+            </a>
 
             <p style={{ lineHeight: 1.6, color: 'var(--text-secondary)' }}>
               India's premier drone technology and DGCA flight training platform. Bridging industry
@@ -152,19 +164,30 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate, onOpenChat }) => {
             alignItems: 'center',
             justifyContent: 'space-between',
             gap: '1rem',
-            fontSize: '0.8rem',
+            fontSize: '0.85rem',
             color: 'var(--text-muted)'
           }}
         >
-          <div>
-            © {CURRENT_YEAR} DroneTV AI Support & Lead Assistant. Production website:{' '}
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', flexWrap: 'wrap' }}>
+            <span>© {CURRENT_YEAR}</span>
             <a
               href="https://dronetv-ai.vercel.app/"
               target="_blank"
               rel="noopener noreferrer"
-              style={{ color: 'var(--accent-cyan)', textDecoration: 'none' }}
+              style={{
+                color: 'var(--accent-cyan)',
+                textDecoration: 'underline',
+                textUnderlineOffset: '3px',
+                fontWeight: 600,
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '0.35rem',
+                cursor: 'pointer'
+              }}
+              title="DroneTV — AI Support & Lead Assistant | Aerial Ecosystem"
             >
-              DroneTV — AI Support & Lead Assistant | Aerial Ecosystem <ExternalLink size={12} style={{ display: 'inline' }} />
+              DroneTV — AI Support & Lead Assistant | Aerial Ecosystem
+              <ExternalLink size={13} style={{ flexShrink: 0 }} />
             </a>
           </div>
 
