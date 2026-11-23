@@ -56,7 +56,7 @@ The application is wrapped in a bespoke <b>Cyber-Aerospace Glassmorphic Design S
 
 ```
   ┌─────────────────────────┐      ┌─────────────────────────┐      ┌─────────────────────────┐
-  │  🛸 Aerospace Frontend  │ ──❯  │ 🛡️ Express REST Gateway  │ ──❯ │ 🗄️ Resilient Datastore  │
+  │  🛸 Aerospace Frontend  │ ──❯  │ 🛡️ Express REST Gateway│ ──❯  │ 🗄️ Resilient Datastore  │
   │ React 18 + TS + 3D Tilt │      │ Zod + Helmet + RateLimit│      │ MongoDB / In-Memory Repo│
   └─────────────────────────┘      └─────────────────────────┘      └─────────────────────────┘
 ```
