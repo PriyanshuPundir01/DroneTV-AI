@@ -157,14 +157,14 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate, onOpenChat }) => {
           }}
         >
           <div>
-            © {CURRENT_YEAR} DroneTV AI Support & Lead Assistant. Reference website context from{' '}
+            © {CURRENT_YEAR} DroneTV AI Support & Lead Assistant. Production website:{' '}
             <a
-              href="https://dronetv.in"
+              href="https://dronetv-ai.vercel.app/"
               target="_blank"
               rel="noopener noreferrer"
               style={{ color: 'var(--accent-cyan)', textDecoration: 'none' }}
             >
-              DroneTV.in <ExternalLink size={12} style={{ display: 'inline' }} />
+              DroneTV — AI Support & Lead Assistant | Aerial Ecosystem <ExternalLink size={12} style={{ display: 'inline' }} />
             </a>
           </div>
 

@@ -17,6 +17,13 @@
 [![Security](https://img.shields.io/badge/Security-Helmet_%7C_CORS_%7C_RateLimit-a78bfa?style=for-the-badge&logo=shield&logoColor=0a0c10)](#)
 [![Assignment](https://img.shields.io/badge/Assessment-IPAGE_Group_Intern-00ff66?style=for-the-badge&logo=google-classroom&logoColor=0a0c10)](#)
 [![License: MIT](https://img.shields.io/badge/License-MIT-38bdf8?style=for-the-badge&logo=open-source-initiative&logoColor=0a0c10)](LICENSE)
+[![Live Demo](https://img.shields.io/badge/Live_Demo-dronetv--ai.vercel.app-00ff99?style=for-the-badge&logo=vercel&logoColor=0a0c10)](https://dronetv-ai.vercel.app/)
+
+<br/>
+
+<p align="center" style="font-family: 'Bookman Old Style', 'URW Bookman', serif; font-size: 1.15rem; color: #00ff99;">
+  🚀 <b>Live Deployment:</b> <a href="https://dronetv-ai.vercel.app/" target="_blank"><b>DroneTV — AI Support & Lead Assistant | Aerial Ecosystem</b></a> 🚀
+</p>
 
 <br/>
 
@@ -391,8 +398,8 @@ This project was designed, developed, and submitted by <b>Priyanshu Pundir</b> i
 - **Phone:** `+91 9548014400`
 - **Office / Address:** Pundir Office, Bhagwan Singh Complex, 788, Gularghati Rd, Nathuwawala, Dehradun, Uttarakhand 248008
 - **GitHub Repository:** [https://github.com/PriyanshuPundir01/FullStack_Chatbot_Task_Priyanshu_Pundir](https://github.com/PriyanshuPundir01/FullStack_Chatbot_Task_Priyanshu_Pundir)
+- **Live Deployment:** [DroneTV — AI Support & Lead Assistant | Aerial Ecosystem](https://dronetv-ai.vercel.app/)
 - **Video Walkthrough:** [Google Drive Video Demo (5–10 min)](https://drive.google.com/file/d/1wegXzvxixzkn-oJfcNOio3Co5NpTpDEN/view?usp=sharing)
-- **Reference Context:** Inspired by [DroneTV.in](https://dronetv.in/)
 
 ---
 
