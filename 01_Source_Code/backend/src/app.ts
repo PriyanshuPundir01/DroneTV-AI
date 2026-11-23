@@ -7,8 +7,11 @@ import authRoutes from './routes/auth.routes';
 import { errorHandler, notFoundHandler } from './middleware/errorHandler';
 import { sanitizeNoSqlInjection } from './middleware/validateEnquiry';
 import { generalApiLimiter } from './middleware/rateLimiter';
-import { getDbStatus } from './config/database';
+import { connectDatabase, getDbStatus } from './config/database';
 import { config } from './config/environment';
+
+// Eagerly connect to database on cold-start
+connectDatabase().catch(() => {});
 
 const app: Application = express();
 
@@ -23,7 +26,7 @@ app.use(
         styleSrc: ["'self'", "'unsafe-inline'", 'https://fonts.googleapis.com'],
         fontSrc: ["'self'", 'https://fonts.gstatic.com', 'data:'],
         imgSrc: ["'self'", 'data:', 'blob:', 'https:'],
-        connectSrc: ["'self'", 'http://localhost:*', 'http://127.0.0.1:*', config.clientUrl]
+        connectSrc: ["'self'", 'http://localhost:*', 'http://127.0.0.1:*', 'https://*.vercel.app', config.clientUrl]
       }
     },
     crossOriginEmbedderPolicy: false,
@@ -39,16 +42,16 @@ app.use(
   cors({
     origin: (origin, callback) => {
       if (!origin) return callback(null, true);
-      if (config.isProduction) {
-        if (config.allowedOrigins.includes(origin)) return callback(null, true);
-        return callback(new Error(`Origin ${origin} not allowed by CORS.`));
-      }
       if (
         origin.startsWith('http://localhost') ||
         origin.startsWith('http://127.0.0.1') ||
+        origin.endsWith('.vercel.app') ||
         config.allowedOrigins.includes(origin)
       ) {
         return callback(null, true);
+      }
+      if (config.isProduction) {
+        return callback(new Error(`Origin ${origin} not allowed by CORS.`));
       }
       return callback(null, true);
     },

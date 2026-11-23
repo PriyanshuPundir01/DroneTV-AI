@@ -2,9 +2,16 @@ import app from './app';
 import { config } from './config/environment';
 import { connectDatabase } from './config/database';
 
+export default app;
+
 async function bootstrap() {
   // Connect to DB asynchronously (with graceful fallback)
   await connectDatabase();
+
+  // In Vercel serverless functions, the runtime handles HTTP listening
+  if (process.env.VERCEL) {
+    return;
+  }
 
   const server = app.listen(config.port, () => {
     console.log(`====================================================`);

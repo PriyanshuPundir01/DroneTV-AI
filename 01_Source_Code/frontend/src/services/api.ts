@@ -8,7 +8,7 @@ import {
 } from '../types/enquiry';
 import { QuickQuestionItem } from '../types/chat';
 
-const API_BASE = '/api';
+const API_BASE = (import.meta.env.VITE_API_URL as string) || '/api';
 const TOKEN_KEY = 'dronetv_admin_token';
 const USER_KEY = 'dronetv_admin_user';
 
@@ -99,7 +99,7 @@ class ApiService {
     } catch (err: any) {
       if (!err.status) {
         const networkErr = new Error(
-          'Unable to reach DroneTV backend API. Please make sure the backend server is running on port 5000.'
+          'Unable to reach DroneTV backend API. Please make sure the backend service is running.'
         ) as any;
         networkErr.status = 503;
         throw networkErr;

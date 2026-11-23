@@ -217,7 +217,7 @@ export const Navbar: React.FC<NavbarProps> = ({
           <div
             title={
               backendOnline === true
-                ? 'Backend API Connected (Port 5000)'
+                ? 'Backend API Connected'
                 : backendOnline === false
                 ? 'Backend Offline'
                 : 'Connecting to API...'
